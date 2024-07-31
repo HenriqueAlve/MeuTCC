@@ -23,9 +23,8 @@ public class VendaResource {
         return vendaService.vender(produtoId, quantidade);
     }
 
-    @GetMapping("/listar")
+    @GetMapping("/ver/vendas")
     public ResponseEntity<List<VendaDTO>> listarVendas(){
-
         return this.vendaService.listarVendas();
     }
 

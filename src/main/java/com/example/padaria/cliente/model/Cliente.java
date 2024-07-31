@@ -26,8 +26,6 @@ public class Cliente {
     @OneToOne
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Venda> vendas;
 
 
 }

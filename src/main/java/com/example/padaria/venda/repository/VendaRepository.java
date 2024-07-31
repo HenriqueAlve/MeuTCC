@@ -20,5 +20,5 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
     List<Venda> findByDataVenda(Date dataVenda);
 
     @Query("SELECT v FROM Venda v WHERE YEAR(v.dataVenda) = :year AND MONTH(v.dataVenda) = :month")
-    List<Venda> findByMonth(int year, int month);
+    List<Venda> findByDataVendaMes(int year, int month);
 }

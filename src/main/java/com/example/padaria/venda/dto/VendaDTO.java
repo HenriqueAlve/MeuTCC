@@ -21,7 +21,7 @@ public class VendaDTO {
     private int quantidade;
     private double totalVenda;
     private Produto produto;
-    private Cliente cliente;
+
 
     public VendaDTO(Venda venda) {
         this.id = venda.getId();
@@ -29,7 +29,7 @@ public class VendaDTO {
         this.quantidade = venda.getQuantidade();
         this.totalVenda = venda.getTotalVenda();
         this.produto = venda.getProduto();
-        this.cliente = venda.getCliente();
+
     }
 
     public static List<VendaDTO> converter(List<Venda> vendas) {

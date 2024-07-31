@@ -22,7 +22,5 @@ public class Venda {
     private double totalVenda;
     @ManyToOne
     private Produto produto;
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+
 }

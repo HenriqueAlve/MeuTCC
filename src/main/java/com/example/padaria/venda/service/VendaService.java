@@ -85,7 +85,7 @@ public class VendaService {
         YearMonth thisMonth = YearMonth.now();
         int year = thisMonth.getYear();
         int month = thisMonth.getMonthValue();
-        List<Venda> vendas = vendaRepository.findByMonth(year, month);
+        List<Venda> vendas = vendaRepository.findByDataVendaMes(year, month);
         return vendas.stream().mapToDouble(Venda::getTotalVenda).sum();
     }
 }
