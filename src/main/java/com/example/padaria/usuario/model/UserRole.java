@@ -3,7 +3,6 @@ package com.example.padaria.usuario.model;
 public enum UserRole {
     ROOT("root"),
     USER("user"),
-
     EMPLOYEE("employee");
 
     private String role;

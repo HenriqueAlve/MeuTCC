@@ -1,14 +1,13 @@
 package com.example.padaria.usuario.model;
 
 
+import com.example.padaria.endereco.model.Endereco;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,6 +27,9 @@ public class Usuario implements UserDetails{
     private String cpf;
     private String telefone;
 
+    @Embedded
+    private Endereco endereco;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
@@ -36,14 +38,25 @@ public class Usuario implements UserDetails{
         this.password = password;
         this.nome = data.nome();
         this.cpf = data.cpf();
-
         this.telefone = data.telefone();
+        this.endereco = data.endereco();
         this.role = data.role();
+    }
+
+    public Usuario(UserDTO data, String encryptedPassword, UserRole userRole) {
+        this.username = data.username();
+        this.password = encryptedPassword;
+        this.nome = data.nome();
+        this.cpf = data.cpf();
+        this.telefone = data.telefone();
+        this.endereco = data.endereco();
+        this.role = userRole;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRole.ROOT) return List.of(new SimpleGrantedAuthority("ROLE_ROOT"), new SimpleGrantedAuthority("ROLE_USER"));
+        else if (this.role == UserRole.EMPLOYEE) return List.of(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
     
@@ -65,8 +78,5 @@ public class Usuario implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setRole(String user) {
     }
 }

@@ -23,8 +23,7 @@ public class Cliente {
     private String email;
     private Date dataDeNascismento;
     private String telefone;
-    @OneToOne
-    @JoinColumn(name = "id_endereco")
+    @Embedded
     private Endereco endereco;
 
 

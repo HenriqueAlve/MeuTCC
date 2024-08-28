@@ -1,12 +1,10 @@
 package com.example.padaria.security;
 
-import com.example.padaria.usuario.model.AuthenticationDto;
-import com.example.padaria.usuario.model.LoginResponseDto;
-import com.example.padaria.usuario.model.UserDTO;
-import com.example.padaria.usuario.model.Usuario;
+import com.example.padaria.usuario.model.*;
 import com.example.padaria.usuario.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -61,8 +59,7 @@ public class SecurityService {
 
 
         Usuario newClient = new Usuario(registerDto, encryptedPassword);
-        newClient.setRole("USER");
-
+        newClient.setRole(UserRole.USER);
 
         this.repository.save(newClient);
 
@@ -70,6 +67,23 @@ public class SecurityService {
     }
 
 
+    public ResponseEntity<List<Usuario>> listarClientes() {
+        List<Usuario> listaDeClientes = repository.findAll();
+        return ResponseEntity.ok(listaDeClientes);
+    }
 
+    public String registerFuncionario(UserDTO funcionario) {
+        if (this.repository.findByUsername(funcionario.username()) != null) {
+            throw new EntityExistsException("Usuário já existente.");
+        }
+        
+        String encryptedPassword = new BCryptPasswordEncoder().encode(funcionario.password());
 
+        Usuario newClient = new Usuario(funcionario, encryptedPassword, UserRole.EMPLOYEE);
+        // newClient.setRole(UserRole.FUNCIONARIO);
+
+        this.repository.save(newClient);
+
+        return newClient.toString();
+    }
 }

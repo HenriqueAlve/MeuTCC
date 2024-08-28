@@ -57,8 +57,31 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/registerUser").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/auth/registerFuncionario").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/lista/clientes").permitAll()
 
-                        .requestMatchers(HttpMethod.GET, "/api/produtos/listar").hasAnyRole("USER", "ROOT")
+
+                   //
+
+                                .requestMatchers(HttpMethod.GET, "/api/categoria/listar").hasAnyRole("USER", "ROOT")
+                                .requestMatchers(HttpMethod.POST, "/api/categoria/cadastrar").hasAnyRole( "ROOT")
+                                .requestMatchers(HttpMethod.DELETE, "/api/categoria/deletar/{idCategoria}").hasAnyRole( "ROOT")
+                                .requestMatchers(HttpMethod.PUT, "/api/categoria/atualizar/{idCategoria}").hasAnyRole( "ROOT")
+
+                                .requestMatchers(HttpMethod.POST, "/api/produtos/cadastrar").hasAnyRole( "ROOT")
+                                .requestMatchers(HttpMethod.DELETE, "/api/produtos/deletar/{idProduto}").hasAnyRole( "ROOT")
+                                .requestMatchers(HttpMethod.PUT, "/api/produtos/atualizar/{id}").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/produtos/estoque").hasAnyRole( "ROOT")
+                                .requestMatchers(HttpMethod.GET, "/api/produtos/estoqueBaixo").hasAnyRole( "ROOT")
+
+                        .requestMatchers(HttpMethod.GET, "/api/vendas/listar").hasAnyRole("USER", "ROOT")
+                        .requestMatchers(HttpMethod.GET, "/api/vendas/total-vendas").hasAnyRole("USER", "ROOT")
+                        .requestMatchers(HttpMethod.GET, "/api/vendas/total-pedidos").hasAnyRole("USER", "ROOT")
+                        .requestMatchers(HttpMethod.POST, "/api/vendas").hasAnyRole("USER", "ROOT")
+                        .requestMatchers(HttpMethod.POST, "/api/vendas/registrarVendas").hasAnyRole("USER", "ROOT")
+                                .requestMatchers(HttpMethod.GET, "/api/vendas/mes/{mes}").hasAnyRole( "ROOT")
+
+                        .requestMatchers(HttpMethod.GET, "/api/produtos/listar").permitAll()
 
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

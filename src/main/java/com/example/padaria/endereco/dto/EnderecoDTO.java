@@ -3,17 +3,18 @@ package com.example.padaria.endereco.dto;
 import com.example.padaria.cliente.dto.ClienteDTO;
 import com.example.padaria.cliente.model.Cliente;
 import com.example.padaria.endereco.model.Endereco;
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Embeddable
 @Getter
 @Setter
 public class EnderecoDTO {
 
-    private Long id;
     private String rua;
     private String bairro;
     private String cep;

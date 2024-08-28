@@ -11,7 +11,12 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     void deleteByCategoria_Id(Long idCategoria);
 
-    Produto findByQuantidadeEmEstoqueLessThan(int quantidade);
+    List<Produto> findAllByQuantidadeEmEstoqueLessThan(int quantidade);
 
     Produto findByNome(String nome);
+
+
+
+
+
 }

@@ -37,7 +37,7 @@ public class CategoriaResource {
         return this.categoriaService.atualizarCategoria(idCategoria, formulario);
     }
 
-    @DeleteMapping("/{idCategoria}")
+    @DeleteMapping("/deletar/{idCategoria}")
     public ResponseEntity<CategoriaDTO> deletarCategoria(@PathVariable Long idCategoria){
         return this.categoriaService.deletarCategoria(idCategoria);
     }

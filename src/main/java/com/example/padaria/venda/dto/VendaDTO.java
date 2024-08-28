@@ -1,35 +1,50 @@
 package com.example.padaria.venda.dto;
 
-import com.example.padaria.cliente.dto.ClienteDTO;
-import com.example.padaria.cliente.model.Cliente;
-import com.example.padaria.produto.dto.ProdutoDTO;
-import com.example.padaria.produto.model.Produto;
+import com.example.padaria.item.venda.dto.ItemVendaDTO;
 import com.example.padaria.venda.model.Venda;
-import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
 public class VendaDTO {
-    private Long id;
-    private Date dataVenda;
+
+    private LocalDateTime dataVenda;
     private int quantidade;
     private double totalVenda;
-    private Produto produto;
+    private Long usuarioId;
+    private String nomeUsuario;
+    private List<ItemVendaDTO> itensVenda;
 
+    public VendaDTO() {
+        // Construtor padrão
+    }
 
     public VendaDTO(Venda venda) {
-        this.id = venda.getId();
         this.dataVenda = venda.getDataVenda();
         this.quantidade = venda.getQuantidade();
         this.totalVenda = venda.getTotalVenda();
-        this.produto = venda.getProduto();
+        this.usuarioId = venda.getUsuario().getId();
+        this.nomeUsuario = venda.getUsuario().getNome();
+        this.itensVenda = venda.getItensVenda().stream()
+                .map(ItemVendaDTO::new)
+                .collect(Collectors.toList());
+    }
 
+    public VendaDTO(VendaDTODois venda, Long id, String nome) {
+        this.dataVenda = venda.dataVenda();
+        this.quantidade = venda.quantidade();
+        this.totalVenda = venda.totalVenda();
+        this.usuarioId = id;
+        this.nomeUsuario = nome;
+        this.itensVenda = venda.itensVenda().stream()
+                .map(ItemVendaDTO::new)
+                .collect(Collectors.toList());
     }
 
     public static List<VendaDTO> converter(List<Venda> vendas) {

@@ -1,12 +1,14 @@
 package com.example.padaria.produto.resource;
 
 import com.example.padaria.produto.dto.ProdutoDTO;
+import com.example.padaria.produto.dto.ProdutoEstoqueDTO;
 import com.example.padaria.produto.form.ProdutoForm;
 import com.example.padaria.produto.model.Produto;
 import com.example.padaria.produto.service.ProdutoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +26,12 @@ public class ProdutoResource {
         return this.produtoService.listarProdutos();
     }
 
+    @GetMapping("/estoque")
+    public ResponseEntity<List<ProdutoEstoqueDTO>> listarEstoque( ){
+        return this.produtoService.listarEstoque();
+    }
+
+
     @GetMapping("/{idProduto}")
     public ResponseEntity<ProdutoDTO> listarProduto(@PathVariable Long idProduto){
         return this.produtoService.listarProduto(idProduto);
@@ -34,7 +42,7 @@ public class ProdutoResource {
         return this.produtoService.cadastrarProduto(formulario);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<ProdutoDTO> atualizarProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO) {
         ProdutoDTO atualizadoProduto = produtoService.atualizarProduto(id, produtoDTO);
         return ResponseEntity.ok(atualizadoProduto);
@@ -56,7 +64,8 @@ public class ProdutoResource {
     }
 
     @GetMapping("/estoqueBaixo")
-    public Produto listarProdutosComEstoqueBaixo(){
+    @Transactional
+    public ResponseEntity<List<ProdutoEstoqueDTO>> listarProdutosComEstoqueBaixo(){
         return produtoService.listarProdutosComEstoqueBaixo();
     }
 }
